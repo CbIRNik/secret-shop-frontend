@@ -1,6 +1,7 @@
 "use client"
 
 import { UserStore, type User } from "@/entities/user/model"
+import { router } from "@/shared/config/router"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
 import {
 	DropdownMenu,
@@ -18,6 +19,7 @@ import {
 	useSidebar,
 } from "@/shared/ui/sidebar"
 import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react"
+import Link from "next/link"
 
 const SidebarProfilePanel = () => {
 
@@ -57,9 +59,11 @@ const SidebarProfilePanel = () => {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+              <DropdownMenuItem asChild={true}>
+                <Link href={router.accountRoute}>
+                  <BadgeCheck />
+                  Account
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <CreditCard />
