@@ -7,9 +7,9 @@ const httpClient = axios.create({
 })
 
 httpClient.interceptors.response.use(
-  (response) => {
-    response.config.headers.Authorization = `Bearer ${cookie.get('authToken')}`
-    return response
+  (config) => {
+    config.headers.Authorization = `Bearer ${cookie.get('authToken')}`
+    return config
   },
   (error) => Promise.reject(error.response),
 )
