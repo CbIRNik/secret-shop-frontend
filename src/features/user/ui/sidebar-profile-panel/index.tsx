@@ -21,8 +21,7 @@ import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "
 
 const SidebarProfilePanel = () => {
 
-  const userStore = UserStore()
-  const user = userStore.user as User
+  const { logout, user } = UserStore()
   const { isMobile } = useSidebar()
 
   return (
@@ -34,7 +33,7 @@ const SidebarProfilePanel = () => {
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
-							<UserInfo user={user} />
+							<UserInfo user={user!} />
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -46,7 +45,7 @@ const SidebarProfilePanel = () => {
             >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-								<UserInfo user={user} />
+								<UserInfo user={user!} />
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -72,7 +71,7 @@ const SidebarProfilePanel = () => {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={userStore.logout}>
+            <DropdownMenuItem onClick={logout}>
               <LogOut />
               Log out
             </DropdownMenuItem>
