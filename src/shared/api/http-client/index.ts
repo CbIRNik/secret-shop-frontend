@@ -6,11 +6,10 @@ const httpClient = axios.create({
   withCredentials: false,
 })
 
-httpClient.interceptors.response.use(
+httpClient.interceptors.request.use(
   (config) => {
     config.headers.Authorization = `Bearer ${cookie.get('authToken')}`
     return config
   },
-  (error) => Promise.reject(error.response),
 )
 export { httpClient }
