@@ -1,5 +1,5 @@
 import axios from 'axios'
-import cookies from 'js-cookie'
+import cookie from 'js-cookie'
 
 const httpClient = axios.create({
   baseURL: process.env.API_URL,
@@ -8,7 +8,7 @@ const httpClient = axios.create({
 
 httpClient.interceptors.response.use(
   (response) => {
-    response.config.headers.Authorization = `Bearer ${cookies.get('authToken')}`
+    response.config.headers.Authorization = `Bearer ${cookie.get('authToken')}`
     return response
   },
   (error) => Promise.reject(error.response),
