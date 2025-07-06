@@ -1,6 +1,7 @@
 import { httpClient } from "@/shared/api/http-client"
 import cookie from "js-cookie"
 import { create } from "zustand"
+import { toast } from "sonner"
 
 type User = {
   id: string
