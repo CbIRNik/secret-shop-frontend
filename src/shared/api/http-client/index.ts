@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import cookie from 'js-cookie'
 
 const httpClient = axios.create({
@@ -11,5 +11,11 @@ httpClient.interceptors.request.use(
     config.headers.Authorization = `Bearer ${cookie.get('authToken')}`
     return config
   },
+)
+httpClient.interceptors.response.use(
+  (config) => config,
+  (error: AxiosError) => {
+    return Promise.reject(error.response?.data)
+  }
 )
 export { httpClient }

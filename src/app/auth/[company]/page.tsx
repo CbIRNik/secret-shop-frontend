@@ -16,8 +16,8 @@ const AuthCallback = () => {
       try {
         const { data } = await httpClient.post<{ authToken: string }>(`/user/auth/${company}`, { code })
         cookie.set("authToken", data.authToken)
-      } catch {
-        toast.error("Failed to authenticate")
+      } catch (error: any) {
+        toast.error(error.message)
       }
       router.push("/")
 		})()

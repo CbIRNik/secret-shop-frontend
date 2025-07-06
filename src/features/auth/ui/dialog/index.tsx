@@ -27,12 +27,12 @@ const AuthDialog = () => {
             We’ll create your account if it doesn’t exist.
           </DialogDescription>
         </DialogHeader>
-        <div className={"flex flex-col gap-4 p-6 pt-2"}>
+        <div className={"flex flex-col gap-4 p-6 pt-4"}>
           {authVariants.map((variant, index) => (
             <Button
               key={index}
               variant={"outline"}
-              className={"w-full"}
+              className={"w-full px-8"}
               onClick={() => redirect(variant.url)}
             >
               <Image src={variant.icon} alt="" width={16} height={16} />
