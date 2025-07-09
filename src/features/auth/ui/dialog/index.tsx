@@ -10,11 +10,18 @@ import {
   DialogTrigger,
   DialogHeader,
   DialogDescription,
-  DialogFooter,
 } from "@/shared/ui/dialog"
-import { redirect } from "next/navigation"
+import { redirect, usePathname } from "next/navigation"
+import cookie from "js-cookie"
 
 const AuthDialog = () => {
+  const pathname = usePathname()
+
+  const handleRedirect = (route: string) => {
+    cookie.set("redirectTo", pathname)
+    redirect(route)
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild={true}>
@@ -33,7 +40,7 @@ const AuthDialog = () => {
               key={index}
               variant={"outline"}
               className={"w-full px-8"}
-              onClick={() => redirect(variant.url)}
+              onClick={() => handleRedirect(variant.url)}
             >
               <Image src={variant.icon} alt="" width={16} height={16} />
               Continue with {variant.name}
