@@ -10,9 +10,7 @@ type Params = {
 
 const GET = async (
   request: Request,
-  {
-    params,
-  }: { params: Promise<Params> },
+  { params }: { params: Promise<Params> },
 ) => {
   const { company } = await params
   const code = new URL(request.url).searchParams.get("code") as string | null

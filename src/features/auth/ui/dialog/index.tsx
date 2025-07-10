@@ -11,15 +11,16 @@ import {
   DialogHeader,
   DialogDescription,
 } from "@/shared/ui/dialog"
-import { redirect, usePathname } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import cookie from "js-cookie"
 
 const AuthDialog = () => {
   const pathname = usePathname()
+  const router = useRouter()
 
   const handleRedirect = (route: string) => {
     cookie.set("redirectTo", pathname)
-    redirect(route)
+    router.replace(route)
   }
 
   return (

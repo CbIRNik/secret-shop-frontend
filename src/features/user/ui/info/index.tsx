@@ -1,5 +1,6 @@
 "use client"
 import { type User, UserStore } from "@/entities/user/model"
+import { routes } from "@/shared/config/routes"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
 import { Button } from "@/shared/ui/button"
 import {
@@ -8,13 +9,13 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuGroup,
 } from "@/shared/ui/dropdown-menu"
 import { LogOut, BadgeCheck } from "lucide-react"
+import Link from "next/link"
+import { logout } from "@/features/user/model/logout"
 
 const UserInfo = () => {
-  const { logout } = UserStore()
   const user = UserStore().user as User
 
   return (
@@ -24,18 +25,21 @@ const UserInfo = () => {
           <UserAvatar user={user} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel className="p-0 font-normal">
-          {user.username}
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent
+        className={"w-56"}
+        role={"menu"}
+        side={"bottom"}
+        align={"end"}
+      >
+        <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <BadgeCheck />
-            Account
-          </DropdownMenuItem>
+          <Link href={routes.accountRoute}>
+            <DropdownMenuItem>
+              <BadgeCheck />
+              Account
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={logout}>
           <LogOut />
           Log out
@@ -46,9 +50,15 @@ const UserInfo = () => {
 }
 
 const UserAvatar = ({ user }: { user: User }) => {
+  const getFallback = () => {
+    const [firstName, lastName] = user.username.split(" ")
+    if (!lastName) return firstName[0]
+    const fallback = `${firstName[0]}${lastName[0]}`
+    return fallback
+  }
   return (
     <Avatar>
-      <AvatarFallback>SH</AvatarFallback>
+      <AvatarFallback>{getFallback()}</AvatarFallback>
       <AvatarImage src={user.avatar} />
     </Avatar>
   )
