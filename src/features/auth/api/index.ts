@@ -1,7 +1,6 @@
 import { Company } from "@/entities/company/model"
 import { httpClient } from "@/shared/api/http-client"
 import { cookies } from "next/headers"
-import { toast } from "sonner"
 import { handlers } from "@/shared/config/handlers"
 
 const auth = async (code: string | null, company: Company) => {
