@@ -1,5 +1,5 @@
-import axios from 'axios'
-import cookie from 'js-cookie'
+import axios, { AxiosError } from 'axios'
+import {cookies} from "next/headers"
 
 const httpClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -7,9 +7,16 @@ const httpClient = axios.create({
 })
 
 httpClient.interceptors.request.use(
-  (config) => {
-    config.headers.Authorization = `Bearer ${cookie.get('authToken')}`
+  async (config) => {
+    const cookieStore = await cookies()
+    config.headers.Authorization = `Bearer ${cookieStore.get('authToken')?.value}`
     return config
   },
+)
+httpClient.interceptors.response.use(
+  (config) => config,
+  (error: AxiosError) => {
+    return Promise.reject(error.response?.data)
+  }
 )
 export { httpClient }

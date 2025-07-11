@@ -1,7 +1,7 @@
 
-const router = {
+const routes = {
   rootRoute: "/",
   accountRoute: "/account"
 } as const
 
-export { router }
+export { routes }

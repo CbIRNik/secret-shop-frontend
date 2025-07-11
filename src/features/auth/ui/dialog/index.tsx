@@ -10,11 +10,19 @@ import {
   DialogTrigger,
   DialogHeader,
   DialogDescription,
-  DialogFooter,
 } from "@/shared/ui/dialog"
-import { redirect } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
+import cookie from "js-cookie"
 
 const AuthDialog = () => {
+  const pathname = usePathname()
+  const router = useRouter()
+
+  const handleRedirect = (route: string) => {
+    cookie.set("redirectTo", pathname)
+    router.replace(route)
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild={true}>
@@ -27,13 +35,13 @@ const AuthDialog = () => {
             We’ll create your account if it doesn’t exist.
           </DialogDescription>
         </DialogHeader>
-        <div className={"flex flex-col gap-4 p-6 pt-2"}>
+        <div className={"flex flex-col gap-4 p-6 pt-4"}>
           {authVariants.map((variant, index) => (
             <Button
               key={index}
               variant={"outline"}
-              className={"w-full"}
-              onClick={() => redirect(variant.url)}
+              className={"w-full px-8"}
+              onClick={() => handleRedirect(variant.url)}
             >
               <Image src={variant.icon} alt="" width={16} height={16} />
               Continue with {variant.name}

@@ -1,42 +1,31 @@
-import { httpClient } from "@/shared/api/http-client"
-import cookie from "js-cookie"
 import { create } from "zustand"
 
 type User = {
   id: string
   authIds: string[]
-	username: string
+  username: string
   avatar: string
 }
 
 type UserState = {
-  user: User | null,
-  setUser: (user: User) => void,
-  getUser: (authToken: string | null) => void,
-  logout: () => void,
+  user: User | null
+  setUser: (user: User | null) => void
+  reset: () => void
 }
 
 const initialStore = {
-	user: null
+  user: null
 }
 
 const UserStore = create<UserState>()((set) => ({
-	...initialStore,
-	setUser: (user) => set(() => ({ user })),
-	getUser: async (authToken) => {
-		if (!authToken) return
-		try {
-			const { data } = await httpClient.get<{ user: User }>("/user/profile")
-			set({ user: data.user })
-		} catch {}
-	},
-	logout: async () => {
-		cookie.remove("authToken")
-		set(initialStore)
-	}
+  ...initialStore,
+  setUser: (user) => {
+    if (!user) return set(() => initialStore)
+    set(() => ({ user }))
+  },
+  reset: async () => {
+    set(initialStore)
+  },
 }))
 
-export { 
-  type User,
-  UserStore
-}
+export { type User, UserStore }
