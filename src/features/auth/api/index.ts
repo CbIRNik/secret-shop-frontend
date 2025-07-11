@@ -14,9 +14,7 @@ const auth = async (code: string | null, company: Company) => {
     )
     cookieStore.set("authToken", data.authToken)
     return data.authToken
-  } catch (error) {
-    toast.error((error as { message: string }).message)
-  }
+  } catch {}
   return null
 }
 
